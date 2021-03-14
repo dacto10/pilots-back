@@ -5,9 +5,18 @@ class PilotController {
         return await Pilot.findOne({ username }).exec();
     }
 
+    async getAll() {
+        return await Pilot.find({}).exec();
+    }
+
+    async login(username, password) {
+        return await Pilot.findOne({username, password}).exec();
+    }
+
     async create(body) {
         const pilot = new Pilot({
-            ...body
+            ...body,
+            flights: []
         });
         await pilot.save();
     }
