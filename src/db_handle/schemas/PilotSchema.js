@@ -5,8 +5,7 @@ const PilotSchema = new Schema({
     username: String,
     password: String,
     isAdmin: Boolean,
-    name:  String, 
-    age: Number,
+    name:  String,
     flights: []
 });
 
