@@ -1,6 +1,7 @@
 import express from 'express';
 import { connection } from '../db_handle/connection.js'
 import pilotRoutes from './routes/PilotRoutes.js';
+import flightRoutes from './routes/FlightRoutes.js'
 import cors from 'cors';
 
 const app = express();
@@ -13,7 +14,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.use("/pilot", pilotRoutes)
+app.use("/pilot", pilotRoutes);
+app.use("/flight", flightRoutes);
 
 app.listen(port, () => {
   console.log("Server up at port " + port);

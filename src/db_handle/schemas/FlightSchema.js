@@ -1,32 +1,32 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const PilotSchema = new Schema({
-    username: {
+const FlightSchema = new Schema({
+    flightId: {
         type: String,
         required: true,
         index: {unique: true}
     },
-    password: {
+    airline: {
         type: String,
         required: true,
     },
-    isAdmin: {
-        type: Boolean,
+    origin: {
+        type: String,
         required: true,
     },
-    birthDate: {
+    destination: {
+        type: String,
+        required: true,
+    },
+    departureDate: {
         type: Date,
-        required: false,
-    },
-    name:  {
-        type: Object,
         required: true,
     },
-    flights: {
-        type: [Schema.Types.ObjectId],
+    arriveDate: {
+        type: Date,
         required: true,
     },
 });
 
-export default PilotSchema;
+export default FlightSchema;

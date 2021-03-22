@@ -1,4 +1,7 @@
 import Pilot from '../../db_handle/models/PilotModel.js';
+import mongoose from 'mongoose'
+
+const { Schema } = mongoose;
 
 class PilotController {
     async getByUsername(username) {
@@ -16,6 +19,7 @@ class PilotController {
     async create(body) {
         const pilot = new Pilot({
             ...body,
+            isAdmin: false,
             flights: []
         });
         await pilot.save();
@@ -25,8 +29,15 @@ class PilotController {
         await Pilot.deleteOne({ username }).exec();
     }
 
-    async updateFlights(username, {flights}) {
-        await Pilot.findOneAndUpdate({username}, {$set: {flights}});
+    async deleteFlight(username, flight) {
+        const pilot = await Pilot.findOne({username});
+        pilot.flights = pilot.flights.filter(el => el != flight);
+        pilot.save();
+    }
+    async createFlight(username, flight) {
+        const pilot = await Pilot.findOne({username});
+        pilot.flights.push(mongoose.Types.ObjectId(flight));
+        pilot.save();
     }
 }
 
