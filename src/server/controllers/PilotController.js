@@ -9,7 +9,28 @@ class PilotController {
     }
 
     async getAll() {
-        return await Pilot.find({}).exec();
+        return await Pilot.aggregate([
+            {
+                $match: { isAdmin: false }
+            },
+            {
+                $sort: { username: 1 }
+            },
+            {
+                $project: { username: 1, password: 1, isAdmin: 1, birthDate: 1, name: 1, flights: 1, _id: 0}
+            }
+        ])
+    }
+
+    async getTotalPilots() {
+        return await Pilot.aggregate([
+            {
+                $match: { isAdmin: false }
+            },
+            {
+                $count: "totalPilots"
+            }
+        ])
     }
 
     async login(username, password) {
@@ -26,7 +47,9 @@ class PilotController {
     }
 
     async deleteByUsername(username) {
+        const pilot = await Pilot.findOne({ username }).exec();
         await Pilot.deleteOne({ username }).exec();
+        return pilot.flights;
     }
 
     async deleteFlight(username, flight) {

@@ -5,7 +5,7 @@ import flightRoutes from './routes/FlightRoutes.js'
 import cors from 'cors';
 
 const app = express();
-const port = 6969;
+const port = 5000;
 
 app.use(express.json());
 app.use(cors());

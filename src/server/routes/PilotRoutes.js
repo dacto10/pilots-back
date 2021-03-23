@@ -25,8 +25,7 @@ pilotRoutes.get('/', async (req, res) => {
 });
 
 pilotRoutes.delete('/:username', async (req, res) => {
-    await pilot.deleteByUsername(req.params.username);
-    res.send("Pilot deleted");
+    res.send(await pilot.deleteByUsername(req.params.username));
 });
 
 pilotRoutes.put('/:username/:flight', async (req, res) => {
@@ -37,6 +36,10 @@ pilotRoutes.put('/:username/:flight', async (req, res) => {
 pilotRoutes.put('/remove/:username/:flight', async (req, res) => {
     await pilot.deleteFlight(req.params.username, req.params.flight);
     res.send("Flight deleted");
+});
+
+pilotRoutes.get('/total/', async (req, res) => {
+    res.send(await pilot.getTotalPilots())
 })
 
 export default pilotRoutes;
